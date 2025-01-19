@@ -11,13 +11,33 @@ the function below should be the only one in this file.
 */
 
 #include "split.h"
-
 /* Add a prototype for a helper function here if you need */
 
+void null(Node*& node) {
+  node == nullptr;
+}
 void split(Node*& in, Node*& odds, Node*& evens)
 {
-  /* Add code here */
-// WRITE YOUR CODE HERE
-}
+  splitHelper(in, odds, evens);
 
-/* If you needed a helper function, write it here */
+  in = nullptr;
+}
+void splitHelper(Node*& in, Node*& odds, Node*& evens) {
+  if(in == nullptr) {
+        in = nullptr;
+        evens = nullptr;
+        odds = nullptr;
+        return;
+    }
+    //evens case
+    if(in->value % 2 == 0) {
+      evens = in;
+      splitHelper(in->next, odds, evens->next);
+        
+    }
+    //odds case
+    else {
+      odds = in;
+      splitHelper(in->next, odds->next, evens);
+    } 
+}
