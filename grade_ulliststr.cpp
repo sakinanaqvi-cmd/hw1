@@ -353,7 +353,8 @@ TEST(ListRemove, RepeatedOneEleRemoveBack)
 
 		EXPECT_EQ(0, list.size());
 		EXPECT_EQ(true, list.empty());
-	}
+    
+    }
 }
 
 TEST(ListRemove, RepeatedOneEleRemoveFront)
@@ -370,6 +371,7 @@ TEST(ListRemove, RepeatedOneEleRemoveFront)
 
 		EXPECT_EQ(0, list.size());
 		EXPECT_EQ(true, list.empty());
+    
 	}
 }
 
@@ -460,6 +462,7 @@ TEST(ListRemove, SongOfBackAndFront)
 	list.push_front("newback");
 
 	EXPECT_TRUE(checkListContent(&list, {"newback"}));
+
 }
 
 

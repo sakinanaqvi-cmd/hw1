@@ -112,7 +112,7 @@ class ULListStr {
    * Deletes all items in the list
    */
   void clear();
-
+  //ULListStr& operator=(ULListStr&& other) = delete;
  private:
   /** 
    * Returns a pointer to the item at index, loc,
@@ -120,6 +120,8 @@ class ULListStr {
    *   - MUST RUN in O(n) 
    */
   std::string* getValAtLoc(size_t loc) const;
+  void pop_front_helper(Item * item, size_t ind);
+  void push_front_helper(Item * item, size_t ind);
   /**
    * Data members
    *  You MUST keep these members though you
