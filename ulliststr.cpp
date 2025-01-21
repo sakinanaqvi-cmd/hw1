@@ -111,7 +111,7 @@ void ULListStr::push_front(const std::string& val) {
         newItem->last += 1;
         size_ += 1;
       //shifts all the elements
-    } else if(head_->first == 0 && head_->last < ARRSIZE && !(head_->first == 0 && head_->last == ARRSIZE)) {
+    } /*else if(head_->first == 0 && head_->last < ARRSIZE && !(head_->first == 0 && head_->last == ARRSIZE)) {
         int last = head_->last;
         if(last == 9) head_->val[9] = head_->val[8];
         if(last >= 8) head_->val[8] = head_->val[7];
@@ -146,13 +146,13 @@ void ULListStr::push_front(const std::string& val) {
         head_->val[head_->first - 1] = val;
         head_->first -= 1;
         size_ += 1;
-    }        
+    }       */ 
 }
 void ULListStr::pop_front() {  
   if(empty()) return;
 
   //handles the shifting of elements
-  if(head_->last > head_->first) {
+  /*if(head_->last > head_->first) {
     head_->val[head_->first] = head_->val[head_->first + 1];
     if(head_->first + 2 < head_->last) head_->val[head_->first + 1] = head_->val[head_->first + 2];
     if(head_->first + 3 < head_->last) head_->val[head_->first + 2] = head_->val[head_->first + 3];
@@ -162,8 +162,8 @@ void ULListStr::pop_front() {
     if(head_->first + 7 < head_->last) head_->val[head_->first + 6] = head_->val[head_->first + 7];
     if(head_->first + 8 < head_->last) head_->val[head_->first + 7] = head_->val[head_->first + 8];
     if(head_->first + 2 < head_->last) head_->val[head_->first + 8] = head_->val[head_->first + 9];
-  }
-  head_->last -= 1;
+  }*/
+  /*head_->last -= 1;
   //handles last element removal
   if(head_->first == head_->last) {
     Item * old = head_;
@@ -178,7 +178,7 @@ void ULListStr::pop_front() {
   //handles when size becomes zero to avoid valgrind errors
   if(size_ == 0) { 
     clear();
-  }
+  }*/
 }
 void ULListStr::pop_back() {  
   if(empty()) return;
