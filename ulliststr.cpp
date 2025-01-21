@@ -108,26 +108,10 @@ void ULListStr::push_front(const std::string& val) {
         head_ = tail_ = newItem;
         //assign first item to val
         newItem->val[0] = val;
-        newItem->last += 1;
+        newItem->last = 1;
         size_ += 1;
-      //shifts all the elements
-    } /*else if(head_->first == 0 && head_->last < ARRSIZE && !(head_->first == 0 && head_->last == ARRSIZE)) {
-        int last = head_->last;
-        if(last == 9) head_->val[9] = head_->val[8];
-        if(last >= 8) head_->val[8] = head_->val[7];
-        if(last >= 7) head_->val[7] = head_->val[6];
-        if(last >= 6) head_->val[6] = head_->val[5];
-        if(last >= 5) head_->val[5] = head_->val[4];
-        if(last >= 4) head_->val[4] = head_->val[3];
-        if(last >= 3) head_->val[3] = head_->val[2];
-        if(last >= 2) head_->val[2] = head_->val[1];
-        if(last >= 1) head_->val[1] = head_->val[0];
 
-        //after shifting, assign the first index to value
-        head_->val[0] = val;
-        head_->last += 1;
-        size_ += 1;
-    } else if(head_->first == 0 && head_->last == ARRSIZE) { //case: full list
+    } else if(head_->last == ARRSIZE) { //case: full list
         Item * newItem = new Item();
         //create a new node before the current node
         if(head_ != nullptr) {
@@ -135,35 +119,38 @@ void ULListStr::push_front(const std::string& val) {
           newItem->next = head_;
         } else newItem->next = nullptr;
         
+        newItem->prev = nullptr;
         head_ = newItem;
 
         //same assignment as when theres an empty node
         newItem->val[0] = val;
         newItem->last = 1;
+
         size_ += 1;
-    }  else {
-        //handles all other cases of moving the values
-        head_->val[head_->first - 1] = val;
-        head_->first -= 1;
-        size_ += 1;
-    }       */ 
+    } else {
+        if(head_->last < ARRSIZE) {
+          //in any other case, shift all the values up when front is added
+          push_front_helper(head_, head_->last - 1);
+          
+          head_->val[0] = val;
+          head_->last += 1;
+          size_ += 1;
+        } 
+    }
+        
+}
+void ULListStr::push_front_helper(Item * item, size_t ind) {
+  //uses this in order to shift all the values up by one index
+  if(ind >= 0 && ind < ARRSIZE - 1) {
+    item->val[ind + 1] = item->val[ind];
+    push_front_helper(item, ind - 1); //recursive call to iterate through each value
+  }
 }
 void ULListStr::pop_front() {  
   if(empty()) return;
-
   //handles the shifting of elements
-  /*if(head_->last > head_->first) {
-    head_->val[head_->first] = head_->val[head_->first + 1];
-    if(head_->first + 2 < head_->last) head_->val[head_->first + 1] = head_->val[head_->first + 2];
-    if(head_->first + 3 < head_->last) head_->val[head_->first + 2] = head_->val[head_->first + 3];
-    if(head_->first + 4 < head_->last) head_->val[head_->first + 3] = head_->val[head_->first + 4];
-    if(head_->first + 5 < head_->last) head_->val[head_->first + 4] = head_->val[head_->first + 5];
-    if(head_->first + 6 < head_->last) head_->val[head_->first + 5] = head_->val[head_->first + 6];
-    if(head_->first + 7 < head_->last) head_->val[head_->first + 6] = head_->val[head_->first + 7];
-    if(head_->first + 8 < head_->last) head_->val[head_->first + 7] = head_->val[head_->first + 8];
-    if(head_->first + 2 < head_->last) head_->val[head_->first + 8] = head_->val[head_->first + 9];
-  }*/
-  /*head_->last -= 1;
+  pop_front_helper(head_, head_->first); 
+  
   //handles last element removal
   if(head_->first == head_->last) {
     Item * old = head_;
@@ -178,7 +165,20 @@ void ULListStr::pop_front() {
   //handles when size becomes zero to avoid valgrind errors
   if(size_ == 0) { 
     clear();
-  }*/
+  }
+}
+void ULListStr::pop_front_helper(Item* item, size_t ind) {
+  //handles out of bounds error
+  if(ind >= item->last) return;
+  if(item->last - 1 > ind) {
+    //shifts the elements
+    item->val[ind] = item->val[ind + 1];
+    pop_front_helper(item, ind + 1);
+  } else if(item->next != nullptr) {
+    //if above condition is second to last element
+    item->val[ind] = item->next->val[item->next->first];
+    pop_front_helper(item->next, item->next->first);
+  }
 }
 void ULListStr::pop_back() {  
   if(empty()) return;
