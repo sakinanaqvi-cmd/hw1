@@ -120,8 +120,6 @@ class ULListStr {
    *   - MUST RUN in O(n) 
    */
   std::string* getValAtLoc(size_t loc) const;
-  void pop_front_helper(Item * item, size_t ind);
-  void push_front_helper(Item * item, size_t ind);
   /**
    * Data members
    *  You MUST keep these members though you
