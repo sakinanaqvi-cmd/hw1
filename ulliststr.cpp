@@ -3,7 +3,7 @@
 #include <stdexcept>
 #include <iostream>
 #include "ulliststr.h"
-
+using namespace std;
 ULListStr::ULListStr()
 {
   head_ = NULL;
@@ -76,6 +76,7 @@ void ULListStr::push_back(const std::string& val) {
     if(empty()) {
         //adds elements into a new node when empty
         Item * newItem = new Item();
+
         //assign last item to val
         newItem->val[ARRSIZE - 1] = val;
         newItem->last = ARRSIZE;
@@ -84,6 +85,7 @@ void ULListStr::push_back(const std::string& val) {
         size_ += 1;
 
     } else if(tail_->last >= ARRSIZE - 1) { //case: full list
+
         Item * newItem = new Item();
         //create a new node before the current node
         if(tail_ != nullptr) {
@@ -161,13 +163,13 @@ void ULListStr::pop_front() {
 }
 void ULListStr::pop_back() {  
     if(empty()) return;
-    
+
     //shifts the pointer to the previous value and decrease the size
     tail_->last -= 1;
     size_ -= 1;
 
     //handles last element removal
-    if(tail_->last == 0) {
+    if(tail_->last == tail_->first) {
         Item * newItem = tail_;
         //moves tail one node up
         tail_ = tail_->prev;
